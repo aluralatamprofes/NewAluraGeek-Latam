@@ -1,0 +1,10 @@
+{
+    "productos": [
+        {
+            "id": 1,
+            "img": "./assets/producto1.svg",
+            "nombre": "Producto 1",
+            "precio": 29.99
+        }
+    ]
+}
