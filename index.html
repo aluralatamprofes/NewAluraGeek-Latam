@@ -18,9 +18,10 @@
             <section>
                 <h1>Mis Productos:</h1>
 
-                <div class="products-container">
+                <!-- Contenedor principal de productos -->
+                <div id="products-container" class="products-container">
 
-                    <div class="card">
+                    <!-- <div class="card">
                         <img src="./assets/producto1.svg" />
 
                         <div class="card-container--info">
@@ -30,18 +31,19 @@
                                 <img src="./assets/trashIcon.svg" />
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
+                </div>
 
             </section>
 
             <section>
                 <h1>Agregar Producto:</h1>
 
-                <form class="form-container">
-                    <input placeholder="nombre..." type="text">
-                    <input placeholder="precio..." type="text">
-                    <input placeholder="imagen..." type="text">
+                <form class="form-container" id="productForm">
+                    <input id="nombreInput" placeholder="nombre..." type="text">
+                    <input id="precioInput" placeholder="precio..." type="text">
+                    <input id="imagenInput" placeholder="imagen..." type="text">
                     <div class="button-container">
                         <button type="submit" class="button-submit"> Enviar...</button>
                         <button type="reset" class="button-clear">Limpiar...</button>
@@ -59,5 +61,6 @@
             <small>Alura Latam 2021</small>
         </footer>
     </body>
+    <script src="js/script.js" defer></script>
 
 </html>
