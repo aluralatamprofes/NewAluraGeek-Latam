@@ -24,6 +24,15 @@ h1 {
     background-color: aqua;
 }
 
+.main-container > section {
+    width: calc(100%/2);
+}
+
+.products-container {
+
+}
+
+
 .footer-container {
     background-color: #5300C8;
     
@@ -33,8 +42,6 @@ h1 {
 
     padding: 1.5rem 0;
 
-    bottom: 0;
-    position: absolute;
     width: 100%;
 }
 
