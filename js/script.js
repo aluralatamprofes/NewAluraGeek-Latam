@@ -8,13 +8,13 @@ function postData ( event ) {
     // Obtén los valores de los campos de entrada
     const nombre = document.getElementById( 'nombreInput' ).value;
     const precio = document.getElementById( 'precioInput' ).value;
-    const imagen = document.getElementById( 'imagenInput' ).value;
+    const imgSrc = document.getElementById( 'imagenInput' ).value;
 
     // Crea el objeto de datos a enviar
     const data = {
         nombre: nombre,
         precio: precio,
-        imagen: imagen,
+        imagen: imgSrc,
     };
 
     // Realiza la solicitud POST
@@ -29,7 +29,7 @@ function postData ( event ) {
         .then( data => {
             console.log( 'Solicitud POST exitosa:', data );
             // Después de una solicitud POST exitosa, crea la tarjeta
-            createCard( data.nombre, data.precio, data.imagen );
+            createCard( data.nombre, data.precio, data.imgSrc );
         } )
         .catch( error => {
             console.error( 'Error en la solicitud POST:', error );
@@ -39,28 +39,27 @@ function postData ( event ) {
     event.target.reset();
 }
 
-// Función para crear una tarjeta (div con la clase 'card' y atributo de datos)
-function createCard ( nombre, precio, imgSrc ) {
+function createCard ( nombre, precio, imgSrc, id ) {
     const card = document.createElement( 'div' );
     card.classList.add( 'card' );
 
     // Contenido de la tarjeta
     card.innerHTML = `
-            <div class="img-container">
-                <img src="${imgSrc}" alt="${nombre}">
+        <div class="img-container">
+            <img src="${imgSrc}" alt="${nombre}">
+        </div>
+        <div class="card-container--info">
+            <p>${nombre}</p>
+            <div class="card-container--value">
+                <p>$ ${precio}</p>
+                <img src="./assets/trashIcon.svg" alt="Eliminar">
             </div>
-            <div class="card-container--info">
-                <p>${nombre}</p>
-                <div class="card-container--value">
-                    <p>$ ${precio}</p>
-                    <img src="./assets/trashIcon.svg" alt="Eliminar">
-                </div>
-            </div>
-        `;
+        </div>
+    `;
 
     // Agrega la tarjeta al contenedor de productos
     productsContainer.appendChild( card );
-    card.dataset.id = id
+    card.dataset.id = id;
     console.log( id );
 
     // Retorna la tarjeta creada 
@@ -79,23 +78,18 @@ const listaProductos = async () => {
 // Función que renderiza los productos en la pantalla
 const render = async () => {
     try {
-        const productos = await listaProductos();
-
-        if ( productos && productos.length > 0 ) {
-            productos.forEach( ( product ) => {
-                createCard( product.imagen, product.nombre, product.precio );
-            } );
-        } else {
-            console.log( "No hay productos para mostrar." );
-        }
-
+        const listarProductos = await listaProductos();
+        listarProductos.forEach( ( products ) => {
+            productsContainer.appendChild(
+                createCard( products.nombre, products.precio, products.imgSrc )
+            );
+        } );
     } catch ( error ) {
-        console.log( "Error al obtener la lista de productos:", error );
+        console.log( error );
     }
-}
-
-render();
-
+};
 
 // Asocia la función postData al evento submit del formulario
 document.getElementById( 'productForm' ).addEventListener( 'submit', postData );
+
+render()
