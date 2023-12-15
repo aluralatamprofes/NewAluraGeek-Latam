@@ -60,10 +60,42 @@ function createCard ( nombre, precio, imgSrc ) {
 
     // Agrega la tarjeta al contenedor de productos
     productsContainer.appendChild( card );
+    card.dataset.id = id
+    console.log( id );
 
     // Retorna la tarjeta creada 
     return card;
 }
+
+//Función listar productos -- GET
+const listaProductos = async () => {
+    const fetchProducts = await fetch( "http://localhost:3000/productos" )
+        .then( ( res ) => res.json() )
+        .catch( ( err ) => console.log( err ) );
+
+    return fetchProducts;
+};
+
+// Función que renderiza los productos en la pantalla
+const render = async () => {
+    try {
+        const productos = await listaProductos();
+
+        if ( productos && productos.length > 0 ) {
+            productos.forEach( ( product ) => {
+                createCard( product.imagen, product.nombre, product.precio );
+            } );
+        } else {
+            console.log( "No hay productos para mostrar." );
+        }
+
+    } catch ( error ) {
+        console.log( "Error al obtener la lista de productos:", error );
+    }
+}
+
+render();
+
 
 // Asocia la función postData al evento submit del formulario
 document.getElementById( 'productForm' ).addEventListener( 'submit', postData );
