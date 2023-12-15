@@ -29,7 +29,7 @@ function postData ( event ) {
         .then( data => {
             console.log( 'Solicitud POST exitosa:', data );
             // Después de una solicitud POST exitosa, crea la tarjeta
-            createCard( data.nombre, data.precio, data.imgSrc );
+            createCard( data.nombre, data.precio, data.imgSrc, data.id );
         } )
         .catch( error => {
             console.error( 'Error en la solicitud POST:', error );
@@ -52,7 +52,9 @@ function createCard ( nombre, precio, imgSrc, id ) {
             <p>${nombre}</p>
             <div class="card-container--value">
                 <p>$ ${precio}</p>
-                <img src="./assets/trashIcon.svg" alt="Eliminar">
+                <button class="delete-button" data-id="${id}">
+                    <img src="./assets/trashIcon.svg" alt="Eliminar">
+                </button>
             </div>
         </div>
     `;
@@ -60,7 +62,10 @@ function createCard ( nombre, precio, imgSrc, id ) {
     // Agrega la tarjeta al contenedor de productos
     productsContainer.appendChild( card );
     card.dataset.id = id;
-    console.log( id );
+
+    // Añade un manejador de eventos para el botón de eliminar
+    const deleteButton = card.querySelector( '.delete-button' );
+    deleteButton.addEventListener( 'click', () => deleteProduct( id ) );
 
     // Retorna la tarjeta creada 
     return card;
@@ -74,6 +79,25 @@ const listaProductos = async () => {
 
     return fetchProducts;
 };
+// Función para eliminar un producto
+const deleteProduct = async ( productId ) => {
+    try {
+        await fetch( `http://localhost:3000/productos/${productId}`, {
+            method: 'DELETE',
+        } );
+
+        // Elimina la tarjeta del DOM
+        console.log( `Eliminando producto con ID: ${productId}` );
+        const cardToRemove = document.querySelector( `[data-id="${productId}"]` );
+
+        if ( cardToRemove ) {
+            cardToRemove.remove();
+        }
+    } catch ( error ) {
+
+        console.error( 'Error al eliminar el producto:', error );
+    }
+};
 
 // Función que renderiza los productos en la pantalla
 const render = async () => {
@@ -81,13 +105,17 @@ const render = async () => {
         const listarProductos = await listaProductos();
         listarProductos.forEach( ( products ) => {
             productsContainer.appendChild(
-                createCard( products.nombre, products.precio, products.imgSrc )
+                createCard( products.nombre, products.precio, products.imgSrc, products.id )
             );
         } );
     } catch ( error ) {
         console.log( error );
     }
 };
+
+
+
+
 
 // Asocia la función postData al evento submit del formulario
 document.getElementById( 'productForm' ).addEventListener( 'submit', postData );

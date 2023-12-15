@@ -18,13 +18,20 @@ input {
 
 
 button {
-    border-radius: 15px;
-    height: 45px;
-    width: 130px;
+    cursor: pointer;
 
+    
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 500;
     color: #03318C;
+    
+}
+
+#button {
+    border-radius: 15px;
+    
+    height: 45px;
+    width: 130px;
 }
 
 .header {    
@@ -102,6 +109,11 @@ button {
     align-items: center;
     gap:40px;
     flex-direction: column;
+}
+
+.delete-button {
+    background-color: transparent;
+    border: 0 none;
 }
 
 .button-container {
