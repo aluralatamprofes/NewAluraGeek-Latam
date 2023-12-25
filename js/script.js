@@ -103,11 +103,19 @@ const deleteProduct = async ( productId ) => {
 const render = async () => {
     try {
         const listarProductos = await listaProductos();
-        listarProductos.forEach( ( products ) => {
-            productsContainer.appendChild(
-                createCard( products.nombre, products.precio, products.imgSrc, products.id )
-            );
-        } );
+
+        if ( listarProductos.length === 0 ) {
+            const noProductsMessage = document.createElement( 'p' );
+            noProductsMessage.textContent = 'No hay productos agregados';
+            noProductsMessage.classList.add( 'no-products-message' );
+            productsContainer.appendChild( noProductsMessage );
+        } else {
+            listarProductos.forEach( ( products ) => {
+                productsContainer.appendChild(
+                    createCard( products.nombre, products.precio, products.imgSrc, products.id )
+                );
+            } );
+        }
     } catch ( error ) {
         console.log( error );
     }
