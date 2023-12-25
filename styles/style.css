@@ -8,6 +8,20 @@ body {
     height: 100vh;
 }
 
+/* Estiliza a barra de rolagem */
+body::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de rolagem */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Cor do polegar (a parte móvel) */
+    border-radius: 4px; /* Borda arredondada do polegar */
+}
+
+body::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Cor da faixa de rolagem (a parte fixa) */
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -79,18 +93,38 @@ footer {
 
 .no-products-message {
     font-family: 'IBM Plex Mono', monospace;
-    font-weight: 500
+    font-weight: 500;
+    font-size: 16px;
+    
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+
+    color: #999;
 }
 
 .products-container {
-    width: 100%;
-    height: 50vh;
+     max-height: 50vh; /* Altura máxima */
+    overflow-y: auto; /* Adiciona uma barra de rolagem vertical quando necessário */
     padding: 2rem;
-
-    flex-wrap: wrap;
-    flex-direction: row;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     gap: 1rem;
+}
+
+/* Estiliza a barra de rolagem */
+.products-container::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de rolagem */
+}
+
+.products-container::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Cor do polegar (a parte móvel) */
+    border-radius: 4px; /* Borda arredondada do polegar */
+}
+
+.products-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Cor da faixa de rolagem (a parte fixa) */
 }
 
 .card {
@@ -187,6 +221,7 @@ footer {
 
     .main-container > section {
         width: 100%; /* Largura total para seções em telas menores */
+        margin: 2rem 0 ;
     }
 
     .form-container {
